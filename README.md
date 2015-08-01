@@ -14,7 +14,7 @@ When flashing the Teensy module, use the following settings found under the Ardu
 * Board: "Teensy 2.0"
 * CPU Speed: "8 MHz"
 
-It is *VERY IMPORTANT* to set the speed to *8 MHz* or lower. Your teensy board is modified to operate at 3.3 volts instead of the default 5 volts. *Running at the default 16MHz is OVERCLOCKING* the processor, which will probably work fine for a while, but I can't guarantee how long it will last in the desert heat. Don't freak out if you do it by accident and the LEDs flash extra fast, just reflash again with the correct clock speed.
+It is **VERY IMPORTANT** to set the speed to *8 MHz* or lower. Your teensy board is modified to operate at 3.3 volts instead of the default 5 volts. **Running at the default 16MHz is OVERCLOCKING** the processor, which will probably work fine for a while, but I can't guarantee how long it will last in the desert heat. Don't freak out if you do it by accident and the LEDs flash extra fast, just reflash again with the correct clock speed.
 
 The Arduino IDE will then prompt you to press the reset button on the Teensy module, after which it will flash the board. You must press the reset button, since access to the bootloader through USB is disabled in the badge firmware to save power.
 
@@ -27,7 +27,7 @@ The Teensy module can be removed from the badge, and is populated with headers s
 * Insert color into the `LED_COLOR` enum of the header file, ideally somewhere before `LED_COLOR_WHITE`
 * Insert the RGB color values into the main file, `LEDColorMap` in the order it was inserted into `LED_COLOR` You will also need to increase the array size to accomodate this
 
-That's it! The color automatically gets inserted into the rotation upon flashing. There is a trick to the SoftPWM library. Let's say for example you create a color that is RED 127, GREEN 255, BLUE 0. And your fade in time is 1000ms. The red and green fade in at the same rate, so red reaches its full brightness after 500ms, but green continues to fade in for an additional 500ms. You can overcome this by individually setting the fade in/out component of the red portion of the LED to be double that of the green portion of the LED. I started some work on this in the function `offLEDCorrected` but it is up to you to finish it, and write a complementary function for tuning on the LEDs!
+That's it! The color automatically gets inserted into the rotation upon flashing. There is a trick to the SoftPWM library. Let's say for example you create a color that is RED 127, GREEN 255, BLUE 0. And your fade in time is 1000ms. The red and green fade in at the same rate, so red reaches its full brightness after 500ms, but green continues to fade in for an additional 500ms. You can overcome this by individually setting the fade in/out component of the red portion of the LED to be double that of the green portion of the LED. I started some work on this in the function `offLEDCorrected()` but it is up to you to finish it, and write a complementary function for turning on the LEDs!
 
 ### Adding a new mode into the rotation
 * Insert the mode into the `LED_MODE` enum of the header file, which *must* be before `LED_MODE_END`
@@ -65,17 +65,19 @@ You can remove the Teensy 2.0 module from the badge and put it into a breadboard
 
 ### Files
 
-Eagle Project: Hardware/MassHackersBadge2015.pro
-Eagle Schematic: Hardware/MassHackersBadge2015.sch
-Eagle PCB: Hardware/MassHackersBadge2015.brd
+Eagle Project: **Hardware/MassHackersBadge2015.pro**<br>
+Eagle Schematic: **Hardware/MassHackersBadge2015.sch**<br>
+Eagle PCB: **Hardware/MassHackersBadge2015.brd**
 
-Gerbers for manufacturing: Hardware/Gerbers
+Gerbers for manufacturing: **Hardware/Gerbers**
 
-Design rule check and CAM file for Gerber generation for DirtyPCBs: Hardware/DirtyPCBs
+Design rule check and CAM file for Gerber generation for DirtyPCBs: **Hardware/DirtyPCBs**
 
-### Available hardware pins
+### Available Hardware Pins
 
 There are <a href="https://www.pjrc.com/teensy/pinout.html">3 pins</a> available on the Teensy 2.0 to add additional hardware:
 * Pin 9 - Digital I/O
 * Pin 10 - Digital I/O
 * Pin 11 - Analog or Digital I/O
+
+You will need to remove pins you use from the array `UnusedPins` so they do not get disabled during the power conservation routine
